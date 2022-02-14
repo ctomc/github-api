@@ -232,6 +232,17 @@ public class GHRepository extends GHObject {
         return getDeployment(deploymentId).createStatus(ghDeploymentState);
     }
 
+    /**
+     * Create environment builder.
+     *
+     * @param name
+     *            environment name
+     * @return the gh environment builder
+     */
+    public GHEnviromentBuilder createEnvironment(String name) {
+        return new GHEnviromentBuilder(this, name);
+    }
+
     private static class GHRepoPermission {
         boolean pull, push, admin;
     }
