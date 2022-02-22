@@ -72,13 +72,23 @@ public class GHEnviromentBuilder {
         return this;
     }
 
-    public GHEnviromentBuilder addReviewer(GHTeam reviewer) {
-        reviewers.add(new Reviewer("Team", reviewer.getId()));
+    public GHEnviromentBuilder addReviewer(GHTeam... reviewer) {
+        for (GHTeam team : reviewer) {
+            reviewers.add(new Reviewer("Team", team.getId()));
+        }
+        return this;
+    }
+    public GHEnviromentBuilder addReviewer(List<GHTeam> reviewer) {
+        for (GHTeam team : reviewer) {
+            reviewers.add(new Reviewer("Team", team.getId()));
+        }
         return this;
     }
 
-    public GHEnviromentBuilder addReviewer(GHUser reviewer) {
-        reviewers.add(new Reviewer("User", reviewer.getId()));
+    public GHEnviromentBuilder addReviewer(GHUser... reviewer) {
+        for (GHUser user : reviewer) {
+            reviewers.add(new Reviewer("User", user.getId()));
+        }
         return this;
     }
 

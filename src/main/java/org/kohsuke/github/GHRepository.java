@@ -31,6 +31,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.commons.lang3.StringUtils;
 import org.kohsuke.github.function.InputStreamFunction;
 import org.kohsuke.github.internal.EnumUtils;
+import org.kohsuke.github.internal.Previews;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -610,6 +611,37 @@ public class GHRepository extends GHObject {
         return root().createRequest()
                 .withUrlPath(getApiTailUrl("tags"))
                 .toIterable(GHTag[].class, item -> item.wrap(this));
+    }
+
+    /**
+     * List tags paged iterable.
+     *
+     * @return the paged iterable
+     * @throws IOException
+     *             the io exception
+     */
+    public PagedIterable<GHProtectedTag> listProtectedTags() throws IOException {
+        return root().createRequest()
+                .withUrlPath(getApiTailUrl("tags/protection"))
+                .toIterable(GHProtectedTag[].class, item -> item.wrap(this));
+    }
+
+    public GHProtectedTag createProtectedTag(String pattern) throws IOException {
+        return root().createRequest()
+                .withUrlPath(getApiTailUrl("tags/protection"))
+                .with("pattern", pattern)
+                .withPreview(Previews.ANT_MAN)
+                .withPreview(Previews.FLASH)
+                .method("POST")
+                .fetch(GHProtectedTag.class)
+                .wrap(this);
+    }
+
+    public void deleteProtectedTag(long id) throws IOException {
+        root().createRequest()
+                .withUrlPath(getApiTailUrl("tags/protection/" + id))
+                .method("DELETE")
+                .fetchHttpStatusCode();
     }
 
     /**
