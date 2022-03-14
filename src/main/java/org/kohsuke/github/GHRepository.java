@@ -24,6 +24,7 @@
 package org.kohsuke.github;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.infradna.tool.bridge_method_injector.WithBridgeMethods;
 import edu.umd.cs.findbugs.annotations.CheckForNull;
 import edu.umd.cs.findbugs.annotations.NonNull;
@@ -849,6 +850,7 @@ public class GHRepository extends GHObject {
          * @return the string
          */
         @Override
+        @JsonValue
         public String toString() {
             return name().toLowerCase(Locale.ROOT);
         }
